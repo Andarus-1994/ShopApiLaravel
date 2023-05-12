@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\UsersListController;
+use App\Http\Controllers\API\ShopController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +24,7 @@ Route::post('/auth/sendPasswordReset', [AuthController::class, 'sendPasswordRese
 Route::post('/auth/checkCode', [AuthController::class, 'checkCode']);
 Route::post('/auth/resetPassword', [AuthController::class, 'resetPassword']);
 Route::post('/addItem', [ItemController::class, 'store']);
+Route::get('/retrieveMainCategories', [ShopController::class, 'retrieveMainCategories']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getItems', [ItemController::class, 'index']);
     Route::get('/getProfile', [UserProfileController::class, 'getUserProfile']);

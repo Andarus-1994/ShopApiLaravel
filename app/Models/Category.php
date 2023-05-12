@@ -14,4 +14,9 @@ class Category extends Model
     {
         return $this->hasMany(Item::class);
     }
+
+    public function main_categories () {
+
+        return $this->belongsTo(MainCategories::class);
+    }
 }
