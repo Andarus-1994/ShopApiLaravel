@@ -11,7 +11,10 @@ class ShopController extends Controller
     //
 
     public function retrieveMainCategories () {
-
-        return MainCategories::all();
+        $categories = MainCategories::all();
+        $categories->each(function ($category) {
+            $category['open'] = false;
+        });
+        return $categories;
     }
 }
