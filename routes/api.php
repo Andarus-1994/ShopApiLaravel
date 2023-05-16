@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getItems', [ItemController::class, 'index']);
     Route::get('/getProfile', [UserProfileController::class, 'getUserProfile']);
     Route::post('/updateProfile', [UserProfileController::class, 'updateProfile']);
-    Route::group(['middleware' => ['role:admin']], function () {
+    Route::group(['middleware' => ['role:admin|super-admin',]], function () {
         Route::get('/getUsersList/{page}/{word?}', [UsersListController::class, 'show']);
         Route::get('/deleteUser/{id}', [UsersListController::class, 'destroy']);
     });

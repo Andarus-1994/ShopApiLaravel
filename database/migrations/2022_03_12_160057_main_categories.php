@@ -30,5 +30,6 @@ class MainCategories extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('main_categories');
     }
 }

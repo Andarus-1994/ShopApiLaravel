@@ -11,7 +11,7 @@ class ShopController extends Controller
     //
 
     public function retrieveMainCategories () {
-        $categories = MainCategories::all();
+        $categories = MainCategories::with('categories')->has('categories','=', 0)->get();
         $categories->each(function ($category) {
             $category['open'] = false;
         });

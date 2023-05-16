@@ -47,10 +47,9 @@ class UserProfileController extends Controller
             // Get the original file name
             $fileName = $profileImage->getClientOriginalName();
             // Move the uploaded file to a public storage directory
-            $profileImage->move(public_path('storage/profile_images/' . $user->id . '/' ), $fileName);
+            $profileImage->move(public_path('storage/profile_images/' . $user->id . '/'), $fileName);
             $urlImage = asset('storage/profile_images/' . $user->id . '/' . $fileName);
         }
-
 
         $user->update(['first_name' =>  $request['first_name'],
             'last_name' => $request['last_name'],
