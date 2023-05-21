@@ -39,7 +39,7 @@ class AuthController extends Controller
                     'status' => false,
                     'message' => 'validation error',
                     'errors' => $validateUser->errors()
-                ], 401);
+                ], 422);
             }
             $verify_token = $this->quickRandom(32);
             $user = User::create([
@@ -118,7 +118,7 @@ class AuthController extends Controller
                     'status' => false,
                     'message' => 'validation error',
                     'errors' => $validateUser->errors()
-                ], 401);
+                ], 422);
             }
 
             if (!Auth::attempt($request->only(['user', 'password']))) {

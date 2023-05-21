@@ -19,7 +19,7 @@ class Categories extends Migration
             $table->id()->autoIncrement();
             $table->string('name')->unique();
             $table->timestamps();
-            $table->unsignedBigInteger('main_category_id')->unsigned();
+            $table->unsignedBigInteger('main_category_id')->unsigned()->nullable();
             $table->foreign('main_category_id')->references('id')->on('main_categories')->onDelete('cascade');
         });
     }

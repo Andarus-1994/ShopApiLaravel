@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\UsersListController;
 use App\Http\Controllers\API\ShopController;
+use App\Http\Controllers\Api\ItemsDashboardController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['middleware' => ['role:admin|super-admin',]], function () {
         Route::get('/getUsersList/{page}/{word?}', [UsersListController::class, 'show']);
         Route::get('/deleteUser/{id}', [UsersListController::class, 'destroy']);
+        Route::post('/dashboard/newMainCategory', [ItemsDashboardController::class, 'newMainCategory']);
+        Route::get('/dashboard/getCategories', [ItemsDashboardController::class, 'getCategories']);
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
