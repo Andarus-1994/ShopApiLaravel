@@ -34,7 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/getUsersList/{page}/{word?}', [UsersListController::class, 'show']);
         Route::get('/deleteUser/{id}', [UsersListController::class, 'destroy']);
         Route::post('/dashboard/newMainCategory', [ItemsDashboardController::class, 'newMainCategory']);
+        Route::post('/dashboard/newCategory', [ItemsDashboardController::class, 'newCategory']);
         Route::get('/dashboard/getCategories', [ItemsDashboardController::class, 'getCategories']);
+        Route::get('/dashboard/getMainCategories', [ItemsDashboardController::class, 'getMainCategories']);
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

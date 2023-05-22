@@ -50,6 +50,42 @@ class ItemsDashboardController extends Controller
         ], 200);
     }
 
+    public function newCategory (Request $request) {
+        //Validated
+        $validateCategory = Validator::make($request->all(),
+            [
+                'name' => 'required|unique:main_categories'
+            ]);
+
+        if ($validateCategory->fails()) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $validateCategory->errors()
+            ], 422);
+        }
+
+        // Create the MainCategory
+        $category = Category::create([
+            'name' => $request->input('name'),
+            'main_category_id' => $request->input('mainCategory')
+        ]);
+
+        return response()->json([
+            'message' => 'Category created successfully !',
+            'data' => $category
+        ], 200);
+    }
+
+    public function getMainCategories () {
+        $categories = MainCategory::all();
+        $categories->each(function ($category) {
+            $category['label'] = $category['name'];
+            $category['value'] = $category['id'];
+        });
+
+        return response()->json($categories, 200);
+    }
+
     public function getCategories () {
         $categories = Category::all();
         $categories->each(function ($category) {

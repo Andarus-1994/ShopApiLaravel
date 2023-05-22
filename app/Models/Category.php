@@ -9,10 +9,15 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'main_category_id'
+    ];
+
     public function items()
 
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class, 'category_item');
     }
 
     public function main_categories () {
