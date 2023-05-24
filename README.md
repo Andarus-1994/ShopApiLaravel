@@ -7,7 +7,8 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-<a href='https://postimg.cc/VSbkBQZX' target='_blank'><img src='https://i.postimg.cc/VSbkBQZX/Diagram-ER.png' border='0' alt='Diagram-ER'/></a>
+<h3>Diagram ER of the app </h3>
+<a href='https://postimg.cc/k63h1z90' target='_blank'><img src='https://i.postimg.cc/k63h1z90/Diagram-ER.png' border='0' alt='Diagram-ER'/></a>
 
 ## About Laravel
 
