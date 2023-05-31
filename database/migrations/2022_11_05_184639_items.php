@@ -18,9 +18,13 @@ class Items extends Migration
             $table->id();
             $table->string('name');
             $table->string('price');
+            $table->string('stock');
+            $table->string('brand')->nullable();
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
+            $table->string('image')->nullable();
+            $table->string('visible');
             $table->timestamps();
-            $table->unsignedBigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

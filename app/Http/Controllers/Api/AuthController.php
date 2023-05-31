@@ -51,7 +51,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
                 'profile_image' => $request->profile_image
             ]);
-            if (User::count() === 0) {
+            if (User::count() === 1) {
                 $user->assignRole('super-admin');
             } else {
                 $user->assignRole($request->role);

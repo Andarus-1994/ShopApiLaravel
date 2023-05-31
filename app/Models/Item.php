@@ -9,8 +9,19 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'price',
+        'stock',
+        'brand',
+        'color',
+        'size',
+        'image',
+        'visible'
+    ];
+
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_item');
+        return $this->belongsToMany(Category::class, 'category_item')->withTimestamps();
     }
 }

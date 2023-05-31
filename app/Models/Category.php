@@ -17,7 +17,7 @@ class Category extends Model
     public function items()
 
     {
-        return $this->belongsToMany(Item::class, 'category_item');
+        return $this->belongsToMany(Item::class, 'category_item')->withTimestamps();
     }
 
     public function main_categories () {
