@@ -17,8 +17,8 @@ class Items extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('price');
-            $table->string('stock');
+            $table->float('price');
+            $table->integer('stock');
             $table->string('brand')->nullable();
             $table->string('color')->nullable();
             $table->string('size')->nullable();

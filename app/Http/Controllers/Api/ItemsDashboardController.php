@@ -103,8 +103,8 @@ class ItemsDashboardController extends Controller
 
         $item = Item::create([
             'name' => $itemData['name'],
-            'price' => $itemData['price'],
-            'stock' => $itemData['stock'],
+            'price' => floatval($itemData['price']),
+            'stock' => floatval($itemData['stock']),
             'brand' =>  $itemData['brand'],
             'sizes' => $sizes,
             'visible' =>  true
@@ -148,5 +148,11 @@ class ItemsDashboardController extends Controller
         });
 
         return response()->json($categories, 200);
+    }
+
+    public function getItems () {
+        $items = Item::all();
+
+        return response()->json($items, 200);
     }
 }

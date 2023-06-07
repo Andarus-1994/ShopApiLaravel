@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/dashboard/newCategory', [ItemsDashboardController::class, 'newCategory']);
         Route::get('/dashboard/getCategories', [ItemsDashboardController::class, 'getCategories']);
         Route::get('/dashboard/getMainCategories', [ItemsDashboardController::class, 'getMainCategories']);
+        Route::get('/dashboard/getItems', [ItemsDashboardController::class, 'getItems']);
         Route::post('/dashboard/newItem', [ItemsDashboardController::class, 'newItem']);
     });
 });
