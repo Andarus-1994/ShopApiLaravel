@@ -97,16 +97,18 @@ class ItemsDashboardController extends Controller
         }
 
         $sizes = '';
-        if (!empty($itemData['size'])) {
-           $sizes =  implode(', ', $itemData['size']);
+        foreach ($itemData['size'] as $size) {
+            $sizes = $sizes . $size['value'] . ', ';
         }
+
 
         $item = Item::create([
             'name' => $itemData['name'],
             'price' => floatval($itemData['price']),
             'stock' => floatval($itemData['stock']),
             'brand' =>  $itemData['brand'],
-            'sizes' => $sizes,
+            'color' =>  $itemData['color'],
+            'size' => $sizes,
             'visible' =>  true
         ]);
 
@@ -151,7 +153,23 @@ class ItemsDashboardController extends Controller
     }
 
     public function getItems () {
-        $items = Item::all();
+        $items = Item::with('categories')->get();
+        foreach ($items as $item) {
+            foreach ($item->categories as &$category) {
+                $category['label'] = $category['name'];
+                $category['value'] = $category['id'];
+            }
+            $sizes = trim($item->size);
+            $sizes = explode(', ', $sizes);
+            $sizes = array_map(function ($size) {
+                if ($size)
+                return [
+                    'label' => $size,
+                    'value' => $size
+                ];
+            }, $sizes);
+            $item['size'] = $sizes;
+        }
 
         return response()->json($items, 200);
     }
