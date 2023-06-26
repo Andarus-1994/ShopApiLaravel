@@ -123,7 +123,11 @@ class ItemsDashboardController extends Controller
         $item->image = $urlImage;
         $item->save();
 
-        $categories = $itemData['categories'];
+        $categories = [];
+        foreach ($itemData['categories'] as $category) {
+            $categories[] = $category['value'];
+        }
+
         $item->categories()->attach($categories);
 
         return response()->json([
@@ -142,8 +146,12 @@ class ItemsDashboardController extends Controller
         return response()->json($categories, 200);
     }
 
-    public function getCategories () {
-        $categories = Category::all();
+    public function getCategories (Request $request) {
+        if ($request->categoryId === 'all') {
+            $categories = Category::all();
+        } else {
+            $categories = Category::where('main_category_id', $request->categoryId)->get();
+        }
         $categories->each(function ($category) {
             $category['label'] = $category['name'];
             $category['value'] = $category['id'];
@@ -152,8 +160,12 @@ class ItemsDashboardController extends Controller
         return response()->json($categories, 200);
     }
 
-    public function getItems () {
-        $items = Item::with('categories')->get();
+    public function getItems (Request $request) {
+        $categoryId = $request->categoryId;
+        $items = Item::whereHas('categories', function ($query) use ($categoryId) {
+            $query->where('category_id', $categoryId);
+        })
+            ->get();
         foreach ($items as $item) {
             foreach ($item->categories as &$category) {
                 $category['label'] = $category['name'];
