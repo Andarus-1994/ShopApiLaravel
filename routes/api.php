@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/dashboard/getCategories', [ItemsDashboardController::class, 'getCategories']);
         Route::get('/dashboard/getMainCategories', [ItemsDashboardController::class, 'getMainCategories']);
         Route::post('/dashboard/getItems', [ItemsDashboardController::class, 'getItems']);
+        Route::post('/dashboard/editItem', [ItemsDashboardController::class, 'editItem']);
         Route::post('/dashboard/newItem', [ItemsDashboardController::class, 'newItem']);
     });
 });

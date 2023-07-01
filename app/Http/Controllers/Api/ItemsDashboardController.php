@@ -96,9 +96,15 @@ class ItemsDashboardController extends Controller
             ], 422);
         }
 
+        // Saving the sizes by only the name.
         $sizes = '';
-        foreach ($itemData['size'] as $size) {
-            $sizes = $sizes . $size['value'] . ', ';
+        $count = count($itemData['size']);
+        foreach ($itemData['size'] as $index => $size) {
+            $sizes .= $size['value'];
+
+            if ($index !== $count - 1) {
+                $sizes .= ', ';
+            }
         }
 
 
@@ -132,6 +138,90 @@ class ItemsDashboardController extends Controller
 
         return response()->json([
             'message' => 'Item created successfully !',
+            'data' => $item
+        ], 200);
+    }
+
+    public function editItem (Request $request): JsonResponse {
+
+        $itemData = json_decode($request->input('item'), true);
+        $item = Item::find($itemData['id']);
+        if ($itemData['name'] !== $item->name) {
+            $validateItem = Validator::make($itemData, [
+                'name' => 'required|unique:items,name'
+            ]);
+            if ($validateItem->fails()) {
+                return response()->json([
+                    'message' => 'Validation error',
+                    'errors' => $validateItem->errors()
+                ], 422);
+            }
+        }
+        //Validation
+        $validateItem = Validator::make($itemData, [
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric'
+        ]);
+
+        if ($validateItem->fails()) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $validateItem->errors()
+            ], 422);
+        }
+
+
+        if (!$item) {
+            return response()->json([
+                'message' => 'Item not found!',
+                'errors' => 'itemError'
+            ], 404);
+        }
+        // Saving the sizes by only the name.
+        $sizes = '';
+        $count = count($itemData['size']);
+        foreach ($itemData['size'] as $index => $size) {
+            $sizes .= $size['value'];
+
+            if ($index !== $count - 1) {
+                $sizes .= ', ';
+            }
+        }
+
+        // Saving + associating the categories accordingly (many-to-many relationship)
+        $categories = [];
+        foreach ($itemData['categories'] as $category) {
+            $categories[] = $category['value'];
+        }
+        $item->categories()->attach($categories);
+
+        $item->update([
+            'name' => $itemData['name'],
+            'price' => floatval($itemData['price']),
+            'stock' => floatval($itemData['stock']),
+            'brand' =>  $itemData['brand'],
+            'color' =>  $itemData['color'],
+            'size' => $sizes,
+            'visible' =>  true
+        ]);
+
+
+        $image = $request->file('image');
+        if ($image) {
+            $urlImage = '';
+            // Check if an image file was uploaded
+            if ($image) {
+                $fileName = $image->getClientOriginalName();
+                $image->move(public_path('storage/items/' . $item->id . '/'), $fileName);
+                $urlImage = asset('storage/items/' . $item->id . '/' . $fileName);
+            }
+            $item->image = $urlImage;
+            $item->save();
+        }
+
+        return response()->json([
+            'message' => 'Item updated successfully !',
             'data' => $item
         ], 200);
     }
