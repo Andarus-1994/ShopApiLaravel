@@ -99,13 +99,17 @@ class ItemsDashboardController extends Controller
         // Saving the sizes by only the name.
         $sizes = '';
         $count = count($itemData['size']);
-        foreach ($itemData['size'] as $index => $size) {
-            $sizes .= $size['value'];
 
-            if ($index !== $count - 1) {
-                $sizes .= ', ';
+        foreach ($itemData['size'] as $index => $size) {
+            if ($size) {
+                $sizes .= $size['value'];
+
+                if ($index !== $count - 1) {
+                    $sizes .= ', ';
+                }
             }
         }
+
 
 
         $item = Item::create([
@@ -182,10 +186,12 @@ class ItemsDashboardController extends Controller
         $sizes = '';
         $count = count($itemData['size']);
         foreach ($itemData['size'] as $index => $size) {
-            $sizes .= $size['value'];
+            if ($size) {
+                $sizes .= $size['value'];
 
-            if ($index !== $count - 1) {
-                $sizes .= ', ';
+                if ($index !== $count - 1) {
+                    $sizes .= ', ';
+                }
             }
         }
 
