@@ -27,7 +27,7 @@ Route::post('/auth/resetPassword', [AuthController::class, 'resetPassword']);
 Route::post('/addItem', [ItemController::class, 'store']);
 Route::get('/retrieveMainCategories', [ShopController::class, 'retrieveMainCategories']);
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/getItems', [ItemController::class, 'index']);
+    Route::post('/getItems', [ShopController::class, 'retrieveItems']);
     Route::get('/getProfile', [UserProfileController::class, 'getUserProfile']);
     Route::post('/updateProfile', [UserProfileController::class, 'updateProfile']);
     Route::group(['middleware' => ['role:admin|super-admin',]], function () {
